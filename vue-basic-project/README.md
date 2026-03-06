@@ -1,15 +1,65 @@
-# vue-basic-project
+# Concepts covered:
 
-created a project with Vite + Vue 3.
+- Vue application instance
+- Mounting a Vue app
+- Options API
+- Composition API
+- <script setup>
+
+# Vue Basic Project
+
+- A simple project created while learning Vue 3 using Vite.
+- This project demonstrates the Vue Application structure, Options API, and Composition API with <script setup>.
 
 ## Creating a Vue Application
 
-npm create vue@latest
-cd <your-project-name>
-npm install
-npm run dev
+1. npm create vue@latest
+2. cd <your-project-name>
+3. npm install
+4. npm run dev
 
-# Project Structure
+## Vue application flow
+
+- In a Vue + Vite project the application starts from index.html.
+  - index.html → main.js → App.vue → Components
+
+### The Application Instance
+
+- Every Vue application starts by creating a new application instance with the createApp function
+- createApp() creates a Vue application instance.
+- when we do createApp(App) -> App.vue becomes the root component.(top parent component).
+- Every app requires a `root component` that can contain other components as its children.
+- In Single-File Components, we typically import the root component from another file: check main.js
+
+### Mounting the App​
+
+- An application instance won't render anything until its `.mount()` method is called. It expects a "container" argument, which can either be an actual DOM element or a selector string:
+
+- app.mount('#app') -> this tells vue, Render the Vue app inside this HTML element.
+- <div id="app"></div> -> Vue will render App.vue inside this div.
+
+- The content of the app's root component will be rendered inside the container element. The container element itself is not considered part of the app.
+
+Result in browser
+index.html
+↓
+#app div
+↓
+App.vue rendered here(root component)
+↓
+all other components inside it
+
+### Multiple Application Instances​
+
+You are not limited to a single application instance on the same page. The createApp API allows multiple Vue applications to co-exist on the same page,Each runs separately.
+
+const app1 = createApp(App1)
+app1.mount('#app1')
+
+const app2 = createApp(App2)
+app2.mount('#app2')
+
+## Project Structure
 
     src
     ├── App.vue
@@ -44,22 +94,26 @@ npm run dev
 
 - Variables defined inside setup() must be returned to make them accessible in the template.
 - example:
-    <script>
-    import { ref } from 'vue'
-  
-    export default {
-    setup() {
-    const count = ref(0)
-  
-        function increment() {
-          count.value++
-        }
-  
-        return { count, increment }
-  
-    }
-    }
-    </script>
+
+  ```
+  <script>
+  import { ref } from 'vue'
+
+  export default {
+  setup() {
+  const count = ref(0)
+
+      function increment() {
+        count.value++
+      }
+
+      return { count, increment }
+
+  }
+  }
+  </script>
+
+  ```
 
 - If you don't return them, the template cannot access them.
   So this creates boilerplate.
